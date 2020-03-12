@@ -1,0 +1,36 @@
+<h2>Equipos</h2>
+
+<app-add-equipo (addEquipo)="addEquipo($event)"></app-add-equipo>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Puntos</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let equipo of equipos">
+            <a routerLink="/equipos/{{equipo.nombre}}">
+                <td>{{equipo.nombre}}</td>
+            </a>
+            <td>{{equipo.puntos}}</td>
+        </tr>
+
+    </tbody>
+
+
+</table>
+
+<!-- <ul>
+    <li *ngFor="let equipo of equipos">
+        {{equipo.nombre}}
+        {{equipo.puntos}}
+
+        <p *ngFor="let jugador of equipo.jugadores">
+            {{jugador.nombre}}
+        </p>
+
+    </li>
+</ul> -->

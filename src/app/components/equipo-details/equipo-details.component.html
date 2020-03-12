@@ -1,0 +1,30 @@
+<div *ngIf="equipo">
+    <h2>{{equipo.nombre}}</h2>
+
+    <app-add-jugador (addJugador)="addJugador($event)"></app-add-jugador>
+
+    <p> <strong>Jugadores:</strong> </p>
+
+    <!-- <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Goles</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let jugador of equipo.jugadores">
+                {{jugador.nombre}}
+            </tr>
+        </tbody>
+    </table> -->
+
+    <ul>
+        <li *ngFor="let jugador of equipo.jugadores">
+         {{jugador.nombre}}
+        </li>
+    </ul>
+
+    <button (click)="goBack()">Volver</button>
+</div>
