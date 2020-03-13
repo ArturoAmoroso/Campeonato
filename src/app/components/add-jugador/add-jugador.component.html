@@ -1,9 +1,20 @@
 <form action="POST" (ngSubmit)="onSubmit()">
-    <label for="Nombre"><strong>Nombre: </strong>
+    <hr>
+    <h3>Registrar Jugador</h3>
+    <label><strong>Nombre: </strong>
         <input type="text" name="Nombre" [(ngModel)]="nombre">
-    </label>
-
-    <br> <br>
+    </label> <br> <br>
+    <label><strong>Casaca: </strong>
+        <input type="text" name="Casaca" [(ngModel)]="casaca">
+    </label> <br> <br>
+    <label><strong>Posicion: </strong>
+        <select name="Posicion" [(ngModel)]="posicion">
+            <option value="Delantero">Delantero</option>
+            <option value="MedioCampo">Medio Campista</option>
+            <option value="Denfensor">Denfensor</option>
+            <option value="Arquero">Arquero</option>
+        </select>
+    </label> <br> <br>
     <input type="submit" value="Registrar" >
-    <br>
+    <hr>
 </form>

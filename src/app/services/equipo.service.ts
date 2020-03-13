@@ -12,21 +12,40 @@ export class EquipoService {
   equipos: Equipo[] = [];
 
   constructor() {
-    localStorage.setItem("equipos", JSON.stringify("this.equipos"));
-    let aux = JSON.parse(localStorage.getItem("equipos"));
   }
 
   saveEquipo(equipo: Equipo) {
-
     this.equipos.push(equipo);
+    // localStorage.setItem('equipos', JSON.stringify(this.equipos));
   }
 
+  // updateEquipo(equipo: Equipo) {
+  //   this.equipos.push(equipo);
+  //   localStorage.setItem('equipos', JSON.stringify(this.equipos));
+  // }
+
   getEquipos() : Equipo[] {
+    let aux = JSON.parse(localStorage.getItem("equipos"));
+    if(aux){
+      this.equipos = aux;
+    }
     return this.equipos;
   }
 
   getEquipo(nombre: string): Equipo{
-    return this.equipos.find(equipo => equipo.nombre === nombre);
+    let equipo = null;
+    let aux = JSON.parse(localStorage.getItem("equipos"));
+    if(aux){
+      equipo = aux.find(equipo => equipo.nombre === nombre);
+    }
+    else{
+      equipo = this.equipos.find(equipo => equipo.nombre === nombre);
+    }
+    return equipo;
+  }
+
+  saveLocal(){
+    localStorage.setItem('equipos', JSON.stringify(this.equipos));
   }
 
 }

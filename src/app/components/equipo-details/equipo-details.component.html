@@ -5,26 +5,35 @@
 
     <p> <strong>Jugadores:</strong> </p>
 
-    <!-- <table>
+    <table>
         <thead>
             <tr>
                 <th>Nombre</th>
+                <th>Casaca</th>
+                <th>Posicion</th>
                 <th>Goles</th>
+                <th>Asistencias</th>
+                <th>Rojas</th>
+                <th>Amarillas</th>
+                <th>PartJugados</th>
+                <th>PtsFaltas</th>
             </tr>
         </thead>
 
         <tbody>
             <tr *ngFor="let jugador of equipo.jugadores">
-                {{jugador.nombre}}
+                <td>{{jugador.nombre}}</td>
+                <td>{{jugador.casaca}}</td>
+                <td>{{jugador.posicion}}</td>
+                <td>{{jugador.goles}}</td>
+                <td>{{jugador.asistencias}}</td>
+                <td>{{jugador.rojas}}</td>
+                <td>{{jugador.amarillas}}</td>
+                <td>{{jugador.partJugados}}</td>
+                <td>{{jugador.ptsFaltas}}</td>
             </tr>
         </tbody>
-    </table> -->
-
-    <ul>
-        <li *ngFor="let jugador of equipo.jugadores">
-         {{jugador.nombre}}
-        </li>
-    </ul>
+    </table>
 
     <button (click)="goBack()">Volver</button>
 </div>

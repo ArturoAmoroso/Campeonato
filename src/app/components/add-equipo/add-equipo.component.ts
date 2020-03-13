@@ -20,13 +20,17 @@ export class AddEquipoComponent implements OnInit {
   }
 
   onSubmit(){
-    const equipo = {
-      nombre: this.nombre,
-      puntos: 0,
-      jugadores: []
-      // jugadores: [{ nombre: "Messi", posicion: "delantero", goles: 0}]
+    if(this.nombre){
+      const equipo = {
+        nombre: this.nombre,
+        puntos: 0,
+        PG: 0,
+        PE: 0,
+        PP: 0,
+        jugadores: []
+      }
+      this.addEquipo.emit(equipo)
     }
-    this.addEquipo.emit(equipo)
   }
 
 }

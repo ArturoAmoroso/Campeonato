@@ -24,4 +24,8 @@ export class EquiposComponent implements OnInit {
     this.equipoService.saveEquipo(equipo);
   }
 
+  saveLocal(){
+    this.equipoService.saveLocal();
+  }
+
 }
