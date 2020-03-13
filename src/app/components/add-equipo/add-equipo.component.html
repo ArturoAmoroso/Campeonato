@@ -1,6 +1,6 @@
-<form action="POST" (ngSubmit)="onSubmit()">
+<form action="POST" (ngSubmit)="onSubmit(); Name.value=''">
     <label><strong>Nombre: </strong>
-        <input type="text" name="Nombre" [(ngModel)]="nombre">
+        <input type="text" #Name name="Nombre" [(ngModel)]="nombre">
     </label>
 
     <br> <br>

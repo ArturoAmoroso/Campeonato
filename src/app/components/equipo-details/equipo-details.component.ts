@@ -29,7 +29,6 @@ export class EquipoDetailsComponent implements OnInit {
   }
 
   addJugador(jugador: Jugador): void {
-    console.log(jugador);
     this.equipo.jugadores.push(jugador);
   }
 

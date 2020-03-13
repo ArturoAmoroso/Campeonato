@@ -1,11 +1,11 @@
 import { Jugador } from './Jugador';
 
-export class Defensor extends Jugador {
+export class Delantero extends Jugador {
     constructor(nombre: string, posicion: string, casaca: number) {
 		super(nombre, posicion, casaca);
-		this.factorLimpio = 1;
+		this.factorLimpio = 4;
 	}
 	mostrar(){
-		console.log(`Factor defensor: ${this.factorLimpio}`);
+		console.log(`Factor delantero: ${this.factorLimpio}`);
 	}
 }

@@ -1,4 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Jugador } from 'src/app/models/Jugador';
+import { Arquero } from 'src/app/models/Arquero';
+import { Defensor } from 'src/app/models/Defensor';
+import { Delantero } from 'src/app/models/Delantero';
+import { MedioCampo } from 'src/app/models/MedioCampo';
 
 @Component({
   selector: 'app-add-jugador',
@@ -11,6 +16,8 @@ export class AddJugadorComponent implements OnInit {
   posicion: string;
   casaca: number;
   @Output() addJugador: EventEmitter<any> = new EventEmitter();
+  
+  // jugador: Jugador;
 
   constructor() { }
 
@@ -18,30 +25,23 @@ export class AddJugadorComponent implements OnInit {
   }
 
   onSubmit(){
-    const jugador = {
-      nombre: this.nombre,
-      posicion: this.posicion,
-      casaca: this.casaca,
-      
-      goles: 0,
-      asistencias: 0,
-      rojas: 0,
-      amarillas: 0,
-      partJugados: 0,
-      ptsFaltas: 0
-    }
-
-    switch (jugador.posicion)
+    let jugador: Jugador;
+    switch (this.posicion)
     {
-      case "Arquero":
-        console.log("Arco");
-        break;
       case "Delantero":
-        console.log("Ataque");
+        jugador = new Delantero(this.nombre, this.posicion, this.casaca);
+        break;
+      case "Mediocampista":
+        jugador = new MedioCampo(this.nombre, this.posicion, this.casaca);
+        break;
+      case "Defensor":
+        jugador = new Defensor(this.nombre, this.posicion, this.casaca);
+        break;
+      case "Arquero":
+        jugador = new Arquero(this.nombre, this.posicion, this.casaca);
         break;
     }
-
+    jugador.mostrar();
     this.addJugador.emit(jugador)
   }
-
 }
