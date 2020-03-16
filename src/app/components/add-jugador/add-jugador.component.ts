@@ -16,7 +16,6 @@ export class AddJugadorComponent implements OnInit {
   posicion: string;
   casaca: number;
   @Output() addJugador: EventEmitter<any> = new EventEmitter();
-  
   // jugador: Jugador;
 
   constructor() { }
@@ -42,6 +41,6 @@ export class AddJugadorComponent implements OnInit {
         break;
     }
     jugador.mostrar();
-    this.addJugador.emit(jugador)
+    this.addJugador.emit(jugador);
   }
 }

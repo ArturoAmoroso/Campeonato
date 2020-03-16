@@ -1,0 +1,27 @@
+<div>
+
+    <ul *ngIf="equipos">
+        <li *ngFor="let equipo of equipos">{{equipo.nombre}} </li>
+    </ul>
+
+    <input #Team type="text" placeholder="Nombre del equipo..." [(ngModel)]="nombreEquipo">
+    <button (click)="agregarEquipo(); Team.value=''">Agregar</button>
+    <p>{{mensaje}}</p>
+
+    <hr>
+    <strong>Equipo 1: </strong>
+    <span *ngIf="partido.equipo1; else elseBlock">{{partido.equipo1.nombre}}</span>
+    <ng-template #elseBlock>Niguno</ng-template>
+    <ul *ngIf="partido.equipo1">
+        <li *ngFor="let jugador of partido.equipo1.jugadores">{{jugador.nombre}}</li>
+    </ul>
+
+    <hr>
+    <strong>Equipo 2: </strong>
+    <span *ngIf="partido.equipo2; else elseBlock">{{partido.equipo2.nombre}}</span>
+    <ng-template #elseBlock>Niguno</ng-template>
+    <ul *ngIf="partido.equipo2">
+        <li *ngFor="let jugador of partido.equipo2.jugadores">{{jugador.nombre}}</li>
+    </ul>
+
+</div>

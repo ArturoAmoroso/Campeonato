@@ -9,6 +9,9 @@ import { EquiposComponent } from './components/equipos/equipos.component';
 import { AddEquipoComponent } from './components/add-equipo/add-equipo.component';
 import { EquipoDetailsComponent } from './components/equipo-details/equipo-details.component';
 import { AddJugadorComponent } from './components/add-jugador/add-jugador.component';
+import { PartidosComponent } from './components/partidos/partidos.component';
+import { AddPartidoComponent } from './components/add-partido/add-partido.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +21,9 @@ import { AddJugadorComponent } from './components/add-jugador/add-jugador.compon
     AddEquipoComponent,
     EquipoDetailsComponent,
     AddJugadorComponent,
+    PartidosComponent,
+    AddPartidoComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,

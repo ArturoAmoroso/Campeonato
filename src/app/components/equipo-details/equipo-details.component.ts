@@ -18,7 +18,6 @@ export class EquipoDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEquipo();
-    // console.log(this.equipo);
   }
   getEquipo(): void {
     const nombre = this.route.snapshot.paramMap.get('nombre');

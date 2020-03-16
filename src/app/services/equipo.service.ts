@@ -19,28 +19,21 @@ export class EquipoService {
     // localStorage.setItem('equipos', JSON.stringify(this.equipos));
   }
 
-  // updateEquipo(equipo: Equipo) {
-  //   this.equipos.push(equipo);
-  //   localStorage.setItem('equipos', JSON.stringify(this.equipos));
-  // }
-
   getEquipos() : Equipo[] {
-    let aux = JSON.parse(localStorage.getItem("equipos"));
-    if(aux){
-      this.equipos = aux;
+    if(this.equipos.length == 0)
+    {
+      let aux = JSON.parse(localStorage.getItem("equipos"));
+      if(aux)
+        this.equipos = aux;
     }
     return this.equipos;
   }
 
   getEquipo(nombre: string): Equipo{
+    this.getEquipos();
+    
     let equipo = null;
-    let aux = JSON.parse(localStorage.getItem("equipos"));
-    if(aux){
-      equipo = aux.find(equipo => equipo.nombre === nombre);
-    }
-    else{
-      equipo = this.equipos.find(equipo => equipo.nombre === nombre);
-    }
+    equipo = this.equipos.find(e => e.nombre === nombre);
     return equipo;
   }
 
