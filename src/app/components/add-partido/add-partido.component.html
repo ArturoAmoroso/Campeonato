@@ -1,45 +1,41 @@
 <div>
-
-    <ul *ngIf="equipos">
-        <li *ngFor="let equipo of equipos">{{equipo.nombre}} </li>
-    </ul>
-
-    <input #Team type="text" placeholder="Nombre del equipo..." [(ngModel)]="nombreEquipo">
-    <button (click)="agregarEquipo(); Team.value=''">Agregar</button>
-    <p>{{mensaje}}</p>
-
+    <h2>Equipos:</h2>
+    <div id="select-equipo" *ngIf="partido.equipo1==undefined || partido.equipo2==undefined">
+        Seleccionar equipo:
+        <ul *ngIf="equipos">
+            <li *ngFor="let equipo of equipos" (click)="agregarEquipo(equipo)">{{equipo.nombre}}</li>
+        </ul>
+    </div>
     <hr>
-    <app-jugador-partido [equipo]="partido.equipo1" (addPlayers)="addPlayers($event)"></app-jugador-partido>
+    <app-jugador-partido [equipo]="partido.equipo1" (addPlayers)="addPlayers($event)" (dropTeam)="dropTeam($event)"></app-jugador-partido>
     <hr>
-    <app-jugador-partido [equipo]="partido.equipo2" (addPlayers)="addPlayers($event)"></app-jugador-partido>
+    <app-jugador-partido [equipo]="partido.equipo2" (addPlayers)="addPlayers($event)" (dropTeam)="dropTeam($event)"></app-jugador-partido>
+    <hr>
 
-    <hr>
-    <div *ngIf="partido.equipo1 && partido.equipo2"><strong>JUGADAS</strong>
+    <div *ngIf="partido.jugadoresEquipo1.length>0 && partido.jugadoresEquipo2.length>0"><strong>JUGADAS</strong>
         <ul>
             <li (click)="jugada='gol'">Gol</li>
             <li (click)="jugada='tarjetaAmarilla'">Tajeta Amarilla</li>
             <li (click)="jugada='tarjetaRoja'">Tarjeta Roja</li>
         </ul>
-        <!-- Alineacion Equipo: {{partido.equipo1.nombre}}
-        <ul>
-            <li *ngFor="let jugador of partido.jugadoresEquipo1">{{jugador.nombre}}</li>
-        </ul> -->
 
-        <div *ngIf="jugada!=='ninguna'">
+        <div *ngIf="jugada != 'ninguna'">
             <p>Seleccione el equipo: </p>
             <ul>
-                <!-- <li (click)="jugadores=partido.jugadoresEquipo1; equipoJugada = partido.equipo1">{{partido.equipo1.nombre}}</li> -->
                 <li (click)="jugadaDelEquipo(partido.equipo1)">{{partido.equipo1.nombre}}</li>
                 <li (click)="jugadaDelEquipo(partido.equipo2)">{{partido.equipo2.nombre}}</li>
             </ul>
+
+            <div *ngIf="jugadores.length>0">
+                <p>Seleccione el jugador: </p>
+                <ul>
+                    <li *ngFor="let jugador of jugadores" (click)="addJugada(jugador)">{{jugador.nombre}}</li>
+                </ul>
+            </div>
+
         </div>
     
-        <div *ngIf="jugadores">
-            <p>Seleccione el jugador: </p>
-            <ul>
-                <li *ngFor="let jugador of jugadores" (click)="addJugada(jugador)">{{jugador.nombre}}</li>
-            </ul>
-        </div>
+        
 
     </div>
 

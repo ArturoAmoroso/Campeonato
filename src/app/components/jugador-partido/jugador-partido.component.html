@@ -1,28 +1,28 @@
 
 <div>
     <strong>Equipo: </strong>
-    <span *ngIf="equipo; else elseBlock">{{equipo.nombre}}</span>
-        <ng-template #elseBlock>Niguno</ng-template>
+    <span *ngIf="equipo; else elseBlock">{{equipo.nombre}}
+        <button (click)="quitarEquipo()">X</button>
+    </span>
+    <ng-template #elseBlock>Niguno</ng-template>
 
-    <div *ngIf="equipo">
+    <div *ngIf="equipo && configurar">
+        <p>Seleccionar jugador:</p>
         <ul >
-            <li  *ngFor="let jugador of equipo.jugadores">{{jugador.nombre}} {{jugador.casaca}}</li>
+            <li  *ngFor="let jugador of equipo.jugadores" (click)="addPlayer(jugador)">{{jugador.casaca}} | {{jugador.nombre}} | {{jugador.posicion}}</li>
         </ul>
-        <!-- <app-jugador-partido [equipo]="equipo1" (addPlayers)="addPlayers($event)"></app-jugador-partido> -->
-    
-        <form (ngSubmit)="addPlayer(); casaca=undefined">
-            <div>Jugadores en la alineacion:</div> <br>
-            <label>Casaca:
-                <input type="number" [(ngModel)]="casaca" name="casaca" placeholder="Ingrese la casaca...">
-            </label>
-            <input type="submit" value="Agregar">
-        </form>
-    
+        
         <button (click)="guardarAlineacion()">Aceptar</button>
-    
-        <ul>
-            <li *ngFor="let jugador of jugadores">{{jugador.nombre}}</li>
-        </ul>
-        <p>{{mensaje}}</p>
+
+        <div id="select-jugadores" *ngIf="jugadores.length!=0">
+            <p>Alineacion:</p>
+            <ul>
+                <li *ngFor="let jugador of jugadores">
+                    {{jugador.nombre}} {{jugador.casaca}}
+                    <button (click)="quitarJugador(jugador)">x</button>
+                </li>
+            </ul>
+        </div>
     </div>
+
 </div>

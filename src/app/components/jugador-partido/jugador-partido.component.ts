@@ -9,34 +9,48 @@ import { Jugador } from 'src/app/models/Jugador';
 })
 export class JugadorPartidoComponent implements OnInit {
   casaca: Number;
-  mensaje: string;
   @Input() equipo: Equipo;
+  @Output() dropTeam: EventEmitter<any> = new EventEmitter();
   @Output() addPlayers: EventEmitter<any> = new EventEmitter();
   jugadores: Jugador[] = [];
+  configurar: boolean = true;
 
   constructor() { }
 
   ngOnInit() {
   }
-
-  addPlayer(){
-    let jugador = this.equipo.jugadores.find(j => j.casaca == this.casaca);
-    if(jugador)
-    {
+  quitarEquipo(){
+    this.dropTeam.emit(this.equipo);
+    this.equipo = undefined;
+    this.jugadores.forEach(j => j.partJugados--);
+    this.jugadores = [];
+    this.configurar = true;
+  }
+  addPlayer(jugador: Jugador){
       if(this.jugadores.find(j => j.casaca == jugador.casaca))
-        this.mensaje = "Jugador ya esta en la alineacion!";
+        alert("Jugador ya esta en la alineacion!");
       else
       {
         this.jugadores.push(jugador);
         jugador.partJugados++;
       }
-    }
-    else
-      this.mensaje = "Jugador no encontrado!";
   }
-
+  quitarJugador(jugador: Jugador){
+    jugador.partJugados--;
+    this.jugadores = this.jugadores.filter(j => j.casaca != jugador.casaca);
+  }
   guardarAlineacion(){
-   this.addPlayers.emit(this.jugadores);
-  }
+    const equipoConfigurado = {
+      nombre: this.equipo.nombre,
+      puntos: 0,
+      PG: 0,
+      PE: 0,
+      PP: 0,
+      jugadores: this.jugadores
+    }
+    this.addPlayers.emit(equipoConfigurado);
 
+    // this.addPlayers.emit(this.jugadores);
+    this.configurar = false;
+  }
 }

@@ -13,55 +13,63 @@ export class AddPartidoComponent implements OnInit {
   nombreEquipo: string;
   partido: Partido = new Partido;
   equipos: Equipo[] = [];
-  mensaje: string;
   jugada: string = "ninguna";
-  jugadores: Jugador[];
+  jugadores: Jugador[] = [];
   equipoJugada: Equipo;
   constructor(private campeonatoService: CampeonatoService) { }
-
   ngOnInit() {
     this.equipos = this.campeonatoService.getEquipos();
   }
-
-  agregarEquipo(){
-    let equipoEncontrado: any;
-    equipoEncontrado = this.campeonatoService.getEquipo(this.nombreEquipo);
-    if(equipoEncontrado)
-    {
-      if( this.partido.equipo1 == undefined)
+  agregarEquipo(equipo: Equipo){
+    if( this.partido.equipo1 == undefined)
       {
-        if(equipoEncontrado !== this.partido.equipo2)
-          this.partido.equipo1 = equipoEncontrado;
+        if(equipo !== this.partido.equipo2)
+          this.partido.equipo1 = equipo;
         else
-          this.mensaje = "Equipo ya ha sido elegido!!!";
+          alert("Equipo ya ha sido elegido!!!");
       }
       else
       {
         if(this.partido.equipo2 == undefined )
         {
-          if(equipoEncontrado !== this.partido.equipo1)
-            this.partido.equipo2 = equipoEncontrado;
+          if(equipo !== this.partido.equipo1)
+            this.partido.equipo2 = equipo;
           else
-           this.mensaje = "Equipo ya ha sido elegido!!!";
+            alert("Equipo ya ha sido elegido!!!");
         }
         else
-          this.mensaje = "Equipos ya han sido agregados!!!";
+          alert("Equipos ya han sido agregados!!!");
       }
-      console.log(this.partido);
+  }
+  dropTeam(equipo: Equipo){
+    if(equipo == this.partido.equipo1)
+    {
+      this.partido.equipo1 = undefined;
+      this.partido.jugadoresEquipo1 = [];
     }
-    else
-      this.mensaje = "Equipo no encontrado";
+    if(equipo == this.partido.equipo2)
+    {
+      this.partido.equipo2 = undefined;
+      this.partido.jugadoresEquipo2 = [];
+    }
+    console.log(this.partido);
   }
   
-  addPlayers(jugadores: Jugador[]){
-    if(this.partido.jugadoresEquipo1.length == 0)
-      this.partido.jugadoresEquipo1 = jugadores;
-    else
-      this.partido.jugadoresEquipo2 = jugadores;
+  addPlayers(equipo: Equipo){
+    if(this.partido.equipo1)
+    {
+      if(equipo.nombre == this.partido.equipo1.nombre)
+        this.partido.jugadoresEquipo1 = equipo.jugadores;
+    }
+    if(this.partido.equipo2)
+    {
+      if(equipo.nombre == this.partido.equipo2.nombre)
+      this.partido.jugadoresEquipo2 = equipo.jugadores;
+    }
+    console.log(this.partido);
   }
 
   jugadaDelEquipo(equipo: Equipo){
-    this.equipoJugada = equipo;
     if(equipo == this.partido.equipo1)
     {
       this.jugadores = this.partido.jugadoresEquipo1;
@@ -75,22 +83,23 @@ export class AddPartidoComponent implements OnInit {
         this.partido.golesEquipo2++;
     }
   }
-
   addJugada(jugador: Jugador){
     switch(this.jugada){
       case "gol":{
-        jugador.goles = jugador.goles+1;
+        jugador.goles++;
         break;
       }
       case "tarjetaAmarilla":{
-        jugador.amarillas = jugador.amarillas+1;
+        jugador.amarillas++;
         break;
       }
       case "tarjetaRoja":{
-        jugador.rojas = jugador.rojas+1;
+        jugador.rojas++;
         break;
       }
     }
+    this.jugada = 'ninguna';
+    this.jugadores = [];
     console.log(this.partido);
   }
 
