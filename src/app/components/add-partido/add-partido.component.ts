@@ -16,6 +16,8 @@ export class AddPartidoComponent implements OnInit {
   jugada: string = "ninguna";
   jugadores: Jugador[] = [];
   equipoJugada: Equipo;
+  asistencia: string = "ninguna";
+  jugadoresAsistencia: Jugador[];
   constructor(private campeonatoService: CampeonatoService) { }
   ngOnInit() {
     this.equipos = this.campeonatoService.getEquipos();
@@ -87,6 +89,8 @@ export class AddPartidoComponent implements OnInit {
     switch(this.jugada){
       case "gol":{
         jugador.goles++;
+        this.asistencia = 'pendiente';
+        this.jugadoresAsistencia = this.jugadores.filter(j => j.casaca != jugador.casaca);
         break;
       }
       case "tarjetaAmarilla":{
@@ -97,10 +101,22 @@ export class AddPartidoComponent implements OnInit {
         jugador.rojas++;
         break;
       }
+      case "asistencia":{
+        jugador.asistencias++;
+        this.asistencia = 'ninguna';
+        break;
+      }
     }
-    this.jugada = 'ninguna';
-    this.jugadores = [];
+    if(this.jugada != "gol")
+    {
+      this.jugada = 'ninguna';
+      this.jugadores = [];
+    }
     console.log(this.partido);
+  }
+
+  savePartido(){
+
   }
 
 }
