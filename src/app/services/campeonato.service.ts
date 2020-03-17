@@ -1,16 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Equipo } from '../models/Equipo';
-import { EQUIPOS } from 'src/app/mock-equipos';
-import { Jugador } from '../models/Jugador';
-
 
 @Injectable({
   providedIn: 'root'
 })
-export class EquipoService {
-
+export class CampeonatoService {
   equipos: Equipo[] = [];
-
   constructor() {
   }
 
@@ -40,5 +35,4 @@ export class EquipoService {
   saveLocal(){
     localStorage.setItem('equipos', JSON.stringify(this.equipos));
   }
-
 }

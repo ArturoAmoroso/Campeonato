@@ -30,7 +30,7 @@ export class AddJugadorComponent implements OnInit {
       case "Delantero":
         jugador = new Delantero(this.nombre, this.posicion, this.casaca);
         break;
-      case "Mediocampista":
+      case "Mediocampo":
         jugador = new MedioCampo(this.nombre, this.posicion, this.casaca);
         break;
       case "Defensor":

@@ -1,0 +1,28 @@
+
+<div>
+    <strong>Equipo: </strong>
+    <span *ngIf="equipo; else elseBlock">{{equipo.nombre}}</span>
+        <ng-template #elseBlock>Niguno</ng-template>
+
+    <div *ngIf="equipo">
+        <ul >
+            <li  *ngFor="let jugador of equipo.jugadores">{{jugador.nombre}} {{jugador.casaca}}</li>
+        </ul>
+        <!-- <app-jugador-partido [equipo]="equipo1" (addPlayers)="addPlayers($event)"></app-jugador-partido> -->
+    
+        <form (ngSubmit)="addPlayer(); casaca=undefined">
+            <div>Jugadores en la alineacion:</div> <br>
+            <label>Casaca:
+                <input type="number" [(ngModel)]="casaca" name="casaca" placeholder="Ingrese la casaca...">
+            </label>
+            <input type="submit" value="Agregar">
+        </form>
+    
+        <button (click)="guardarAlineacion()">Aceptar</button>
+    
+        <ul>
+            <li *ngFor="let jugador of jugadores">{{jugador.nombre}}</li>
+        </ul>
+        <p>{{mensaje}}</p>
+    </div>
+</div>

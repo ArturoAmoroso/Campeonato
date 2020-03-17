@@ -1,4 +1,4 @@
-<form action="POST" (ngSubmit)="onSubmit(); Name.value=''">
+<form (ngSubmit)="onSubmit(); Name.value=''">
     <label><strong>Nombre: </strong>
         <input type="text" #Name name="Nombre" [(ngModel)]="nombre" placeholder="Equipo a registrar..." required>
     </label>

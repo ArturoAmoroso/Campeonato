@@ -9,19 +9,40 @@
     <p>{{mensaje}}</p>
 
     <hr>
-    <strong>Equipo 1: </strong>
-    <span *ngIf="partido.equipo1; else elseBlock">{{partido.equipo1.nombre}}</span>
-    <ng-template #elseBlock>Niguno</ng-template>
-    <ul *ngIf="partido.equipo1">
-        <li *ngFor="let jugador of partido.equipo1.jugadores">{{jugador.nombre}}</li>
-    </ul>
+    <app-jugador-partido [equipo]="partido.equipo1" (addPlayers)="addPlayers($event)"></app-jugador-partido>
+    <hr>
+    <app-jugador-partido [equipo]="partido.equipo2" (addPlayers)="addPlayers($event)"></app-jugador-partido>
 
     <hr>
-    <strong>Equipo 2: </strong>
-    <span *ngIf="partido.equipo2; else elseBlock">{{partido.equipo2.nombre}}</span>
-    <ng-template #elseBlock>Niguno</ng-template>
-    <ul *ngIf="partido.equipo2">
-        <li *ngFor="let jugador of partido.equipo2.jugadores">{{jugador.nombre}}</li>
-    </ul>
+    <div *ngIf="partido.equipo1 && partido.equipo2"><strong>JUGADAS</strong>
+        <ul>
+            <li (click)="jugada='gol'">Gol</li>
+            <li (click)="jugada='tarjetaAmarilla'">Tajeta Amarilla</li>
+            <li (click)="jugada='tarjetaRoja'">Tarjeta Roja</li>
+        </ul>
+        <!-- Alineacion Equipo: {{partido.equipo1.nombre}}
+        <ul>
+            <li *ngFor="let jugador of partido.jugadoresEquipo1">{{jugador.nombre}}</li>
+        </ul> -->
+
+        <div *ngIf="jugada!=='ninguna'">
+            <p>Seleccione el equipo: </p>
+            <ul>
+                <!-- <li (click)="jugadores=partido.jugadoresEquipo1; equipoJugada = partido.equipo1">{{partido.equipo1.nombre}}</li> -->
+                <li (click)="jugadaDelEquipo(partido.equipo1)">{{partido.equipo1.nombre}}</li>
+                <li (click)="jugadaDelEquipo(partido.equipo2)">{{partido.equipo2.nombre}}</li>
+            </ul>
+        </div>
+    
+        <div *ngIf="jugadores">
+            <p>Seleccione el jugador: </p>
+            <ul>
+                <li *ngFor="let jugador of jugadores" (click)="addJugada(jugador)">{{jugador.nombre}}</li>
+            </ul>
+        </div>
+
+    </div>
+
+
 
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Equipo } from 'src/app/models/Equipo';
-import { EquipoService } from 'src/app/services/equipo.service';
+import { CampeonatoService } from 'src/app/services/campeonato.service';
 
 @Component({
   selector: 'app-equipos',
@@ -11,21 +11,21 @@ export class EquiposComponent implements OnInit {
 
   equipos: Equipo[];
 
-  constructor(private equipoService: EquipoService) { }
+  constructor(private campeonatoService: CampeonatoService) { }
 
   ngOnInit() {
-    this.equipos = this.equipoService.getEquipos();
+    this.equipos = this.campeonatoService.getEquipos();
   }
 
   onSubmit(){
   }
 
   addEquipo(equipo: Equipo){
-    this.equipoService.saveEquipo(equipo);
+    this.campeonatoService.saveEquipo(equipo);
   }
 
   saveLocal(){
-    this.equipoService.saveLocal();
+    this.campeonatoService.saveLocal();
   }
 
 }

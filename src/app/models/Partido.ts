@@ -9,11 +9,10 @@ export class Partido {
     golesEquipo2: number;
     jugadoresEquipo1: Jugador[];
     jugadoresEquipo2: Jugador[];
-    agregarEquipos(){
-
-    }
     constructor() {
         this.golesEquipo1 = 0;
         this.golesEquipo2 = 0;
+        this.jugadoresEquipo1 = [];
+        this.jugadoresEquipo2 = [];
     }
 }

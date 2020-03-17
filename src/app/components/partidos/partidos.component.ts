@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { EquipoService } from 'src/app/services/equipo.service';
 import { Partido } from 'src/app/models/Partido';
 
 @Component({

@@ -12,6 +12,8 @@ import { AddJugadorComponent } from './components/add-jugador/add-jugador.compon
 import { PartidosComponent } from './components/partidos/partidos.component';
 import { AddPartidoComponent } from './components/add-partido/add-partido.component';
 import { HeaderComponent } from './components/header/header.component';
+import { JugadorPartidoComponent } from './components/jugador-partido/jugador-partido.component';
+import { JugadaComponent } from './components/jugada/jugada.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { HeaderComponent } from './components/header/header.component';
     PartidosComponent,
     AddPartidoComponent,
     HeaderComponent,
+    JugadorPartidoComponent,
+    JugadaComponent,
   ],
   imports: [
     BrowserModule,

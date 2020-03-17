@@ -1,17 +1,17 @@
-<form action="POST" (ngSubmit)="onSubmit(); Name.value=''; Number.value=null; Position.value=null">
+<form (ngSubmit)="onSubmit(); Name.value=''; Number.value=null; Position.value=null">
     <hr>
     <h3>Registrar Jugador</h3>
     <label><strong>Nombre: </strong>
         <input #Name type="text" name="Nombre" [(ngModel)]="nombre" placeholder="Nombre...." required>
     </label> <br> <br>
     <label><strong>Casaca: </strong>
-        <input #Number type="text" name="Casaca" [(ngModel)]="casaca" placeholder="Numero de camiseta...." required>
+        <input #Number type="number" name="Casaca" [(ngModel)]="casaca" placeholder="Numero de camiseta...." required>
     </label> <br> <br>
 
     <label><strong>Posicion: </strong>
         <select #Position name="Posicion" [(ngModel)]="posicion">
             <option value="Delantero">Delantero</option>
-            <option value="Mediocampista">Mediocampista</option>
+            <option value="Mediocampo">Mediocampo</option>
             <option value="Defensor">Defensor</option>
             <option value="Arquero">Arquero</option>
         </select>
