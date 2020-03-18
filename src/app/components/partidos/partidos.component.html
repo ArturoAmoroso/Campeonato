@@ -1,0 +1,8 @@
+<div>
+    <h2>Partidos</h2>
+    <button routerLink="/partido">Registrar</button>
+
+    <ul>
+        <li *ngFor="let partido of partidos">{{partido.equipo1.nombre}} | {{partido.golesEquipo1}} - {{partido.golesEquipo2}} | {{partido.equipo2.nombre}}</li>
+    </ul>
+</div>

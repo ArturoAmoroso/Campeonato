@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Equipo } from '../models/Equipo';
+import { Partido } from '../models/Partido';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CampeonatoService {
-  equipos: Equipo[] = [];
+  private equipos: Equipo[] = [];
+  private partidos: Partido[] = [];
   constructor() {
   }
 
@@ -18,15 +20,20 @@ export class CampeonatoService {
     if(this.equipos.length == 0)
     {
       let aux = JSON.parse(localStorage.getItem("equipos"));
-      if(aux)
-        this.equipos = aux;
+      if(aux){
+        for (let index = 0; index < aux.length; index++) {
+          let equipo = new Equipo('');
+          equipo.init(aux[index]);
+          this.equipos.push(equipo);
+        }
+      }
+      // this.equipos = aux;
     }
     return this.equipos;
   }
 
   getEquipo(nombre: string): Equipo{
     this.getEquipos();
-    
     let equipo = null;
     equipo = this.equipos.find(e => e.nombre === nombre);
     return equipo;
@@ -34,5 +41,13 @@ export class CampeonatoService {
 
   saveLocal(){
     localStorage.setItem('equipos', JSON.stringify(this.equipos));
+  }
+
+  getPartidos(){
+    return this.partidos;
+  }
+
+  savePartido(partido: Partido){
+    this.partidos.push(partido);
   }
 }

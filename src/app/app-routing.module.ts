@@ -9,10 +9,11 @@ import { JugadaComponent } from './components/jugada/jugada.component';
 
 const routes: Routes = [
   { path: 'equipos', component:EquiposComponent},
-  { path: '', redirectTo: '/equipos', pathMatch: 'full' },
+  { path: '', redirectTo: '/partidos', pathMatch: 'full' },
   { path: 'equipos/:nombre', component:EquipoDetailsComponent},
   { path: 'partido', component:AddPartidoComponent},
-  { path: 'jugada', component:JugadaComponent}
+  { path: 'jugada', component:JugadaComponent},
+  { path: 'partidos', component:PartidosComponent}
 ];
 
 @NgModule({

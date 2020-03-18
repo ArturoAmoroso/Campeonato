@@ -68,7 +68,7 @@ export class AddPartidoComponent implements OnInit {
       if(equipo.nombre == this.partido.equipo2.nombre)
       this.partido.jugadoresEquipo2 = equipo.jugadores;
     }
-    console.log(this.partido);
+    // console.log(this.partido);
   }
 
   jugadaDelEquipo(equipo: Equipo){
@@ -111,12 +111,39 @@ export class AddPartidoComponent implements OnInit {
     {
       this.jugada = 'ninguna';
       this.jugadores = [];
+      this.asistencia = 'no';
     }
     console.log(this.partido);
   }
 
-  savePartido(){
-
+  terminarPartido(){
+    let arqueroEquipo1: any = this.partido.jugadoresEquipo1.find(j => j.posicion == 'Arquero');
+    let arqueroEquipo2: any = this.partido.jugadoresEquipo2.find(j => j.posicion == 'Arquero');
+    if(arqueroEquipo1)
+      arqueroEquipo1.golesEnContra = arqueroEquipo1.golesEnContra + this.partido.golesEquipo2;
+    if(arqueroEquipo2)
+      arqueroEquipo2.golesEnContra = arqueroEquipo2.golesEnContra + this.partido.golesEquipo1;
+    
+    if(this.partido.golesEquipo1 > this.partido.golesEquipo2)
+    {
+      this.partido.equipo1.PG++;
+      this.partido.equipo2.PP++;
+    }
+    if(this.partido.golesEquipo2 > this.partido.golesEquipo1)
+    {
+      this.partido.equipo2.PG++;
+      this.partido.equipo1.PP++;
+    }
+    if(this.partido.golesEquipo1 == this.partido.golesEquipo2)
+    {
+      this.partido.equipo1.PE++;
+      this.partido.equipo2.PE++;
+    }
+    this.partido.equipo1.calcularPtsTorneo();
+    this.partido.equipo2.calcularPtsTorneo();
+    // this.partido.equipo1.puntos = (this.partido.equipo1.PG*3) + this.partido.equipo1.PE;
+    // this.partido.equipo2.puntos = (this.partido.equipo2.PG*3) + this.partido.equipo2.PE;
+    this.campeonatoService.savePartido(this.partido);
   }
 
 }

@@ -1,20 +1,26 @@
 <div>
-    <h2>Equipos:</h2>
-    <div id="select-equipo" *ngIf="partido.equipo1==undefined || partido.equipo2==undefined">
-        Seleccionar equipo:
-        <ul *ngIf="equipos">
-            <li *ngFor="let equipo of equipos" (click)="agregarEquipo(equipo)">{{equipo.nombre}}</li>
-        </ul>
+    <div id="select-teams" *ngIf="partido.jugadoresEquipo1.length==0 || partido.jugadoresEquipo2.length==0">
+        <h2>Partido</h2>
+        <div id="select-equipo" *ngIf="partido.equipo1==undefined || partido.equipo2==undefined">
+            Seleccionar equipo:
+            <ul *ngIf="equipos">
+                <li *ngFor="let equipo of equipos" (click)="agregarEquipo(equipo)">{{equipo.nombre}}</li>
+            </ul>
+        </div>
+        <hr>
+        <app-jugador-partido [equipo]="partido.equipo1" (addPlayers)="addPlayers($event)" (dropTeam)="dropTeam($event)"></app-jugador-partido>
+        <hr>
+        <app-jugador-partido [equipo]="partido.equipo2" (addPlayers)="addPlayers($event)" (dropTeam)="dropTeam($event)"></app-jugador-partido>
+        <hr>
     </div>
-    <hr>
-    <app-jugador-partido [equipo]="partido.equipo1" (addPlayers)="addPlayers($event)" (dropTeam)="dropTeam($event)"></app-jugador-partido>
-    <hr>
-    <app-jugador-partido [equipo]="partido.equipo2" (addPlayers)="addPlayers($event)" (dropTeam)="dropTeam($event)"></app-jugador-partido>
-    <hr>
+
 
     <div *ngIf="partido.jugadoresEquipo1.length>0 && partido.jugadoresEquipo2.length>0">
-        <strong>JUGADAS </strong>
-        <button (click)="savePartido()">Terminar</button>
+        <!-- <p><b>{{partido.equipo1.nombre | uppercase }} {{partido.golesEquipo1}}-{{partido.golesEquipo2}} {{partido.equipo2.nombre | uppercase }} </b></p> -->
+        <p><b>{{partido.equipo1.nombre | uppercase }}:</b> {{partido.golesEquipo1}}</p>
+        <p><b>{{partido.equipo2.nombre | uppercase }}:</b> {{partido.golesEquipo2}}</p>
+        <!-- <strong>Jugadas: </strong> -->
+        <button (click)="terminarPartido()" routerLink="/partidos">Terminar</button>
         <ul>
             <li (click)="jugada='gol'">Gol</li>
             <li (click)="jugada='tarjetaAmarilla'">Tajeta Amarilla</li>
@@ -44,7 +50,8 @@
         </div>
 
         <div *ngIf="asistencia == 'si'">
-            <ul>Asistencia: 
+            <p>Seleccione jugador que hizo la asistencia:</p>
+            <ul> 
                 <li *ngFor="let jugador of jugadoresAsistencia" (click)="addJugada(jugador)">{{jugador.nombre}} {{jugador.casaca}}</li>
             </ul>
         </div>  

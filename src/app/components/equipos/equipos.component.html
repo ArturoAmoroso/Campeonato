@@ -4,7 +4,7 @@
 
 <button (click)="saveLocal()">Guardar Localmente</button>
 
-<table>
+<table *ngIf="equipos.length>0">
     <thead>
         <tr>
             <th>Nombre</th>

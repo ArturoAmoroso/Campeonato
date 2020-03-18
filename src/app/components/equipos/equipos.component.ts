@@ -15,6 +15,17 @@ export class EquiposComponent implements OnInit {
 
   ngOnInit() {
     this.equipos = this.campeonatoService.getEquipos();
+    if(this.equipos.length > 1)
+    {
+      this.equipos.sort(function (a, b) {
+        if (a.puntos < b.puntos)
+          return 1;
+        if (a.puntos > b.puntos)
+          return -1;
+        return 0;
+      })
+    }
+
   }
 
   onSubmit(){
