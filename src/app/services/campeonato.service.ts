@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Equipo } from '../models/Equipo';
 import { Partido } from '../models/Partido';
+import { Jugador } from '../models/Jugador';
+import { ThrowStmt } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +10,8 @@ import { Partido } from '../models/Partido';
 export class CampeonatoService {
   private equipos: Equipo[] = [];
   private partidos: Partido[] = [];
+  private goleadores: Jugador[] = [];
+  private asistidores: Jugador[] = [];
   constructor() {
   }
 
@@ -50,4 +54,18 @@ export class CampeonatoService {
   savePartido(partido: Partido){
     this.partidos.push(partido);
   }
+
+  getGoleadores(){
+    return this.goleadores;
+  }
+  addGoleador(jugador: Jugador){
+    this.goleadores.push(jugador);
+  }
+  getAsistidores(){
+    return this.asistidores;
+  }
+  addAsistidor(jugador: Jugador){
+    this.asistidores.push(jugador);
+  }
+  
 }

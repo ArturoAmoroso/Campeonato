@@ -9,7 +9,7 @@ import { JugadaComponent } from './components/jugada/jugada.component';
 
 const routes: Routes = [
   { path: 'equipos', component:EquiposComponent},
-  { path: '', redirectTo: '/partidos', pathMatch: 'full' },
+  { path: '', redirectTo: '/partido', pathMatch: 'full' },
   { path: 'equipos/:nombre', component:EquipoDetailsComponent},
   { path: 'partido', component:AddPartidoComponent},
   { path: 'jugada', component:JugadaComponent},

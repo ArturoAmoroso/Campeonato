@@ -1,11 +1,24 @@
 <div>
     <div id="select-teams" *ngIf="partido.jugadoresEquipo1.length==0 || partido.jugadoresEquipo2.length==0">
         <h2>Partido</h2>
-        <div id="select-equipo" *ngIf="partido.equipo1==undefined || partido.equipo2==undefined">
-            Seleccionar equipo:
-            <ul *ngIf="equipos">
+        <div id="select-equipo">
+            Seleccionar equipos:
+            <span *ngIf="equipos">
+                <select [(ngModel)]="equipo_1" name="Equipo1" (click)="seleccionarEquipo_1(equipo_1)">
+                    <option hidden [value]='undefined' disabled selected>Seleccione equipo</option>
+                    <option *ngFor="let equipo of equipos_1" [ngValue]="equipo" >{{equipo.nombre}}</option>
+                </select>
+                vs
+                <select [(ngModel)]="equipo_2" name="Equipo2" (click)="seleccionarEquipo_2(equipo_2)">
+                    <option hidden [value]='undefined' disabled selected>Seleccione equipo</option>
+                    <option *ngFor="let equipo of equipos_2" [ngValue]="equipo" >{{equipo.nombre}}</option>
+                </select>
+            </span>
+
+            <!-- <ul *ngIf="equipos">
                 <li *ngFor="let equipo of equipos" (click)="agregarEquipo(equipo)">{{equipo.nombre}}</li>
-            </ul>
+            </ul> -->
+
         </div>
         <hr>
         <app-jugador-partido [equipo]="partido.equipo1" (addPlayers)="addPlayers($event)" (dropTeam)="dropTeam($event)"></app-jugador-partido>

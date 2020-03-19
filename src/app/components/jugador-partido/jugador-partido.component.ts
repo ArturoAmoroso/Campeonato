@@ -27,18 +27,19 @@ export class JugadorPartidoComponent implements OnInit {
     this.configurar = true;
   }
   addPlayer(jugador: Jugador){
-      if(this.jugadores.find(j => j.casaca == jugador.casaca))
-        alert("Jugador ya esta en la alineacion!");
-      else
-      {
-        this.jugadores.push(jugador);
-        jugador.partJugados++;
-      }
+    if(this.jugadores.find(j => j.casaca == jugador.casaca))
+    {
+      // jugador.partJugados--;
+      this.jugadores = this.jugadores.filter(j => j.casaca != jugador.casaca);
+    }
+    else
+    {
+      this.jugadores.push(jugador);
+      // jugador.partJugados++;
+    }
+    console.log(this.jugadores);
   }
-  quitarJugador(jugador: Jugador){
-    jugador.partJugados--;
-    this.jugadores = this.jugadores.filter(j => j.casaca != jugador.casaca);
-  }
+
   guardarAlineacion(){
     const equipoConfigurado = {
       nombre: this.equipo.nombre,
@@ -49,7 +50,6 @@ export class JugadorPartidoComponent implements OnInit {
       jugadores: this.jugadores
     }
     this.addPlayers.emit(equipoConfigurado);
-
     // this.addPlayers.emit(this.jugadores);
     this.configurar = false;
   }
