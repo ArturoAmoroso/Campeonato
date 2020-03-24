@@ -11,18 +11,13 @@ import { MedioCampo } from 'src/app/models/MedioCampo';
   styleUrls: ['./add-jugador.component.css']
 })
 export class AddJugadorComponent implements OnInit {
-
   nombre: string;
   posicion: string;
   casaca: number;
   @Output() addJugador: EventEmitter<any> = new EventEmitter();
-  // jugador: Jugador;
-
   constructor() { }
-
   ngOnInit() {
   }
-
   onSubmit(){
     let jugador: Jugador;
     switch (this.posicion)

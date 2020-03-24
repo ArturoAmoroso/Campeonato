@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Equipo } from 'src/app/models/Equipo';
 import { Partido } from 'src/app/models/Partido';
 import { Jugador } from 'src/app/models/Jugador';
 import { CampeonatoService } from 'src/app/services/campeonato.service';
+import { Delantero } from 'src/app/models/Delantero';
 
 @Component({
   selector: 'app-add-partido',
@@ -10,78 +11,51 @@ import { CampeonatoService } from 'src/app/services/campeonato.service';
   styleUrls: ['./add-partido.component.css']
 })
 export class AddPartidoComponent implements OnInit {
-  nombreEquipo: string;
-  partido: Partido = new Partido;
-  equipos: Equipo[] = [];
-  equipos_1: Equipo[];
-  equipos_2: Equipo[];
-  equipo_1: Equipo;
-  // equipo_1: string = '';
+  public partido: Partido = new Partido;
+  public equipos: Equipo[] = [];
+  public equipos_1: Equipo[];
+  public equipos_2: Equipo[];
+  public elegirJugadores: boolean = false;
+
+  public equipo_1: Equipo;
+  public equipo_2: Equipo;
 
   jugada: string = "ninguna";
   jugadores: Jugador[] = [];
   equipoJugada: Equipo;
   asistencia: string = "ninguna";
   jugadoresAsistencia: Jugador[];
+
   constructor(private campeonatoService: CampeonatoService) { }
   ngOnInit() {
     this.equipos = this.campeonatoService.getEquipos();
     this.equipos_1 = this.equipos;
     this.equipos_2 = this.equipos;
   }
-  seleccionarEquipo_1(equipo: Equipo){
-    if(equipo){
-      console.log(equipo.nombre);
-      this.partido.equipo1 = equipo;
-      this.equipos_2 = this.equipos.filter(e => e != this.partido.equipo1);
-    }
-  }
-  seleccionarEquipo_2(equipo: Equipo){
-    if(equipo){
-      console.log(equipo.nombre);
-      this.partido.equipo2 = equipo;
+  filtrarEquipos(){
+    if(this.partido.equipo2)
       this.equipos_1 = this.equipos.filter(e => e != this.partido.equipo2);
+    if(this.partido.equipo1)
+      this.equipos_2 = this.equipos.filter(e => e != this.partido.equipo1);
+  }
+  aceptarEquipos(){
+    this.equipo_1 = this.initJugadores(this.partido.equipo1);
+    this.equipo_2 = this.initJugadores(this.partido.equipo2);
+    this.elegirJugadores = true;
+  }
+  initJugadores(equipo: Equipo): Equipo{
+    let equipoAux: Equipo = new Equipo(equipo.nombre);
+    for (let index = 0; index < equipo.jugadores.length; index++) {
+      let jugador = equipo.jugadores[index];
+      jugador = this.initJugador(jugador);
+      equipoAux.jugadores[index] = jugador;
     }
+    return equipoAux;
   }
-  onSubmit(){
-    console.log(this.equipo_1);
-    // this.agregarEquipo(this.equipo_1);
+  initJugador(jugador: Jugador): Jugador{
+    let jugadorNuevo: Jugador = new Delantero(jugador.nombre, jugador.posicion, jugador. casaca);
+    return jugadorNuevo;
   }
-  agregarEquipo(equipo: Equipo){
-    if( this.partido.equipo1 == undefined)
-      {
-        if(equipo !== this.partido.equipo2)
-          this.partido.equipo1 = equipo;
-        else
-          alert("Equipo ya ha sido elegido!!!");
-      }
-      else
-      {
-        if(this.partido.equipo2 == undefined )
-        {
-          if(equipo !== this.partido.equipo1)
-            this.partido.equipo2 = equipo;
-          else
-            alert("Equipo ya ha sido elegido!!!");
-        }
-        else
-          alert("Equipos ya han sido agregados!!!");
-      }
-  }
-  dropTeam(equipo: Equipo){
-    if(equipo == this.partido.equipo1)
-    {
-      this.partido.equipo1 = undefined;
-      this.partido.jugadoresEquipo1 = [];
-    }
-    if(equipo == this.partido.equipo2)
-    {
-      this.partido.equipo2 = undefined;
-      this.partido.jugadoresEquipo2 = [];
-    }
-    console.log(this.partido);
-  }
-  
   addPlayers(equipo: Equipo){
     if(this.partido.equipo1)
     {
@@ -93,11 +67,34 @@ export class AddPartidoComponent implements OnInit {
       if(equipo.nombre == this.partido.equipo2.nombre)
       this.partido.jugadoresEquipo2 = equipo.jugadores;
     }
-    // console.log(this.partido);
   }
 
-  jugadaDelEquipo(equipo: Equipo){
-    if(equipo == this.partido.equipo1)
+  setScore(equipo: Equipo){
+    for (let index = 0; index < equipo.jugadores.length; index++) {
+      let jugadorPartido: any = equipo.jugadores[index];
+      let jugadorEquipo;
+      if(equipo.nombre == this.partido.equipo1.nombre)
+        jugadorEquipo =  this.partido.equipo1.jugadores.find(j => j.casaca == jugadorPartido.casaca);
+      if(equipo.nombre == this.partido.equipo2.nombre)
+        jugadorEquipo =  this.partido.equipo2.jugadores.find(j => j.casaca == jugadorPartido.casaca);
+
+      jugadorEquipo.goles = jugadorEquipo.goles + jugadorPartido.goles;
+      jugadorEquipo.asistencias = jugadorEquipo.asistencias + jugadorPartido.asistencias;
+      if(jugadorPartido.amarillas)
+        jugadorEquipo.amarillas++;
+      if(jugadorPartido.rojas)
+        jugadorEquipo.rojas++;
+      if(jugadorPartido.posicion == "Arquero")
+        jugadorEquipo.golesEnContra = jugadorEquipo.golesEnContra + jugadorPartido.golesEnContra;
+        
+      jugadorEquipo.partJugados++;
+    }
+
+  }
+
+
+  /*jugadaDelEquipo(equipo: Equipo){
+    if(equipo == this.partido.equipo1)d
     {
       this.jugadores = this.partido.jugadoresEquipo1;
       if(this.jugada == "gol")
@@ -141,7 +138,8 @@ export class AddPartidoComponent implements OnInit {
       this.asistencia = 'no';
     }
     console.log(this.partido);
-  }
+  }*/
+
 
   terminarPartido(){
     let arqueroEquipo1: any = this.partido.jugadoresEquipo1.find(j => j.posicion == 'Arquero');
@@ -174,3 +172,21 @@ export class AddPartidoComponent implements OnInit {
   }
 
 }
+
+
+/*
+  initJugador(jugador: Jugador): Jugador{
+    let jugadorAux: any;
+    let jugadorNuevo: Jugador = new Delantero(jugador.nombre, jugador.posicion, jugador. casaca);
+    jugadorAux = {};
+    jugadorAux.nombre = jugador.nombre;
+    jugadorAux.posicion = jugador.posicion;
+    jugadorAux.casaca = jugador.casaca;
+    jugadorAux.goles = 0;
+    jugadorAux.asistencias = 0;
+    jugadorAux.rojas = 0;
+    jugadorAux.amarillas = 0;
+    jugadorAux.golesEnContra = 0;
+    return jugadorAux;
+  }
+*/

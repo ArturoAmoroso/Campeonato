@@ -8,49 +8,53 @@ import { Jugador } from 'src/app/models/Jugador';
   styleUrls: ['./jugador-partido.component.css']
 })
 export class JugadorPartidoComponent implements OnInit {
-  casaca: Number;
+  // casaca: Number;
   @Input() equipo: Equipo;
-  @Output() dropTeam: EventEmitter<any> = new EventEmitter();
-  @Output() addPlayers: EventEmitter<any> = new EventEmitter();
-  jugadores: Jugador[] = [];
   configurar: boolean = true;
+  @Output() setScore: EventEmitter<any> = new EventEmitter();
+  jugadores: Jugador[] = [];
+  jugadoresParticipan: Jugador[] = [];
 
   constructor() { }
-
   ngOnInit() {
   }
-  quitarEquipo(){
+  
+  addPlayer(jugador: Jugador){
+    if(this.jugadoresParticipan.find(j => j.casaca == jugador.casaca)) {
+      // jugador.partJugados--;
+      this.jugadoresParticipan = this.jugadoresParticipan.filter(j => j.casaca != jugador.casaca);
+    }
+    else {
+      this.jugadoresParticipan.push(jugador);
+      // jugador.partJugados++;
+    }
+  }
+
+  /*quitarEquipo(){
     this.dropTeam.emit(this.equipo);
     this.equipo = undefined;
     this.jugadores.forEach(j => j.partJugados--);
     this.jugadores = [];
     this.configurar = true;
-  }
-  addPlayer(jugador: Jugador){
-    if(this.jugadores.find(j => j.casaca == jugador.casaca))
-    {
-      // jugador.partJugados--;
-      this.jugadores = this.jugadores.filter(j => j.casaca != jugador.casaca);
-    }
-    else
-    {
-      this.jugadores.push(jugador);
-      // jugador.partJugados++;
-    }
-    console.log(this.jugadores);
+  }*/
+
+  buscarJugador(jugador: Jugador): boolean{
+    if(this.jugadoresParticipan.find(j => j.casaca == jugador.casaca))
+      return true;
+    return false;
   }
 
-  guardarAlineacion(){
+  guardarResultado(){
     const equipoConfigurado = {
       nombre: this.equipo.nombre,
       puntos: 0,
       PG: 0,
       PE: 0,
       PP: 0,
-      jugadores: this.jugadores
+      jugadores: this.jugadoresParticipan
     }
-    this.addPlayers.emit(equipoConfigurado);
-    // this.addPlayers.emit(this.jugadores);
+    this.setScore.emit(equipoConfigurado);
     this.configurar = false;
+    // console.log(this.equipo);
   }
 }

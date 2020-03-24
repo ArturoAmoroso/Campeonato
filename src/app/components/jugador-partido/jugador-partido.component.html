@@ -1,11 +1,8 @@
 
-<div>
-    <strong>Equipo: </strong>
-    <span *ngIf="equipo; else elseBlock">{{equipo.nombre | uppercase}} </span>
-    <ng-template #elseBlock>Niguno</ng-template>
-
-    <div *ngIf="equipo && configurar">
-        <!-- <p>Seleccionar jugador:</p> -->
+<div *ngIf="equipo">
+    <hr>
+    <strong>{{equipo.nombre | uppercase}} </strong>
+    <div name="score-team" *ngIf="configurar">
         <table>
             <thead>
                 <tr>
@@ -13,26 +10,34 @@
                     <th>Nombre</th>
                     <th>Casaca</th>
                     <th>Posicion</th>
+                    <th>Goles</th>
+                    <th>Asistencias</th>
+                    <th>T.Amarillas</th>
+                    <th>T.Rojas</th>
+                    <th>G.Recibidos</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let jugador of equipo.jugadores">
-                    <!-- <label> -->
-                        <td><input type="checkbox" (change)="addPlayer(jugador)"></td>
-                        <td>{{jugador.nombre}}</td>
-                        <td>{{jugador.casaca}}</td> 
-                        <td>{{jugador.posicion}}</td> 
-                    <!-- </label> -->
+                    <td><input type="checkbox" (change)="addPlayer(jugador)"></td>
+                    <td>{{jugador.nombre}}</td>
+                    <td>{{jugador.casaca}}</td> 
+                    <td>{{jugador.posicion}}</td>
+                    <td align="center"><input type="number" name="goles" class="jugada" [(ngModel)]="jugador.goles" *ngIf="buscarJugador(jugador); else disabled"></td>
+                    <td align="center"><input type="number" name="asistencias" class="jugada" [(ngModel)]="jugador.asistencias" *ngIf="buscarJugador(jugador); else disabled"></td>
+                    <td align="center"><input type="checkbox" name="amarillas" class="jugada" [(ngModel)]="jugador.amarillas" *ngIf="buscarJugador(jugador); else disabled"></td>
+                    <td align="center"><input type="checkbox" name="rojas" class="jugada" [(ngModel)]="jugador.rojas" *ngIf="buscarJugador(jugador); else disabled"></td>
+                    <td align="center"><input type="number" name="golesRecibidos" class="jugada" [(ngModel)]="jugador.golesEnContra" *ngIf="buscarJugador(jugador)&&(jugador.posicion=='Arquero'); else disabled"></td>
                 </tr>
             </tbody>
         </table>
         
-        <button (click)="guardarAlineacion()">Aceptar</button>
+        <button (click)="guardarResultado()">Aceptar</button>
 
-        <div id="select-jugadores" *ngIf="jugadores.length!=0">
+        <div id="select-jugadores" *ngIf="jugadoresParticipan.length!=0">
             <p>Alineacion:</p>
             <ul>
-                <li *ngFor="let jugador of jugadores">
+                <li *ngFor="let jugador of jugadoresParticipan">
                     {{jugador.nombre}} {{jugador.casaca}}
                     <button (click)="quitarJugador(jugador)">x</button>
                 </li>
